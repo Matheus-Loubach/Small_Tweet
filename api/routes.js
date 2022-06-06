@@ -11,8 +11,10 @@ const prisma = new PrismaClient()
 
 //bd recebe os dados
 router.get('/tweets', async function(ctx){
+  // await prisma.tweet.deleteMany()
   const [, token] = ctx.request.headers?.authorization?.split(' ') || []
-  console.log(token)
+  
+
   if(!token){
       ctx.status = 401
       return
@@ -21,11 +23,25 @@ router.get('/tweets', async function(ctx){
 
   const payload = jwt.verify(token, process.env.JWT_SECRET)
 
-  const tweets = await prisma.tweet.findMany()
+  const tweets = await prisma.tweet.findMany({
+    //passar os tt// nome do user 
+    include:{
+      user: true
+    }
+  }
+  )
   ctx.body = tweets
   }catch(error){
-    ctx.status = 401
-    return
+    if(typeof error ==='JsonWebTokenError'){
+
+      ctx.status = 401
+      return
+    }
+    else{
+      ctx.status = 500
+      return
+    }
+   
   }
 })
 

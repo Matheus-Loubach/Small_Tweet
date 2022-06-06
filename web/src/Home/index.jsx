@@ -1,10 +1,11 @@
 import { HeartIcon } from '@heroIcons/react/outline'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 //maximo de digitos 
 const MAX_TWEET_CHAR = 250
 
-function TweetForm(){
+function TweetForm({name, username, avatar, children}){
   const [text, setText] = useState('')
 
   function changeText(e){
@@ -16,7 +17,8 @@ function TweetForm(){
     <div className='border-b border-silver p-4 space-y-6'>
       <div className='flex space-x-5'>
         <img src= '/src/Mask group.png' className='w-7'/>
-        <h1 className='font-bold text-xl'>Página inicial</h1>
+        <h1 className='font-bold text-xl'>Página inicial </h1>
+
       </div>
 
       <form className='pl-12 text-lg flex flex-col'>
@@ -44,6 +46,8 @@ function TweetForm(){
   )
 }
 function Tweet({name, username, avatar, children}){
+  
+
   return(
     <div className="flex space-x-3 p-4 border-b border-solid border-silver">
     <div> 
@@ -70,18 +74,35 @@ function Tweet({name, username, avatar, children}){
 }
 
 export function Home(){
+
+  const [data, setData] = useState([])
+  //data = lista de tt
+  async function getData(){
+    const resposta = await axios.get('http://localhost:9901/tweets',{
+      headers:{
+        'authorization': `Beare ${token}`
+      }
+    })
+    setData(resposta.data)
+  }
+
+  //funcao,array
+  useEffect(() => {
+    getData()
+  },  [])
+  
   return(/*dinamico*/
   <>
   <TweetForm />
   
   <div>
-    <Tweet name="Elon Musk" username="elonMusk" avatar="/src/Mask group.png">
-    Let's make twitter maximu fun
-    </Tweet>
 
-    <Tweet name="Matheus Affonso" username="loubach" avatar="/src/Mask group.png">
-    Hello world
-    </Tweet>
+  {/* Tweet - vem do back */}
+    {data.length && data.map(tweet => (
+       <Tweet name= {tweet.user.name} username={tweet.user.username}  avatar="/src/Mask group.png">
+       {tweet.text}
+       </Tweet>
+    ))}
     </div>
   </>
     
