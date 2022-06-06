@@ -11,7 +11,7 @@ export function App(){
 
   //se tiver user 
   if(user){
-    return <Home /> 
+    return <Home loggedinUser={user}/> 
   }
    // carregamento das pag login e de cadastro na url
   return window.location.pathname === '/signup' ?  <Signup signInUser={setUser} /> : <Login signInUser={setUser}/>
