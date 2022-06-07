@@ -11,36 +11,33 @@ const prisma = new PrismaClient()
 
 //bd recebe os dados
 router.get('/tweets', async function(ctx){
-  // await prisma.tweet.deleteMany()
+ 
   const [, token] = ctx.request.headers?.authorization?.split(' ') || []
-  
 
   if(!token){
       ctx.status = 401
       return
     }
  try{    
+     jwt.verify(token, process.env.JWT_SECRET)
+     const tweets = await prisma.tweet.findMany({
 
-  const payload = jwt.verify(token, process.env.JWT_SECRET)
-
-  const tweets = await prisma.tweet.findMany({
     //passar os tt// nome do user 
-    include:{
-      user: true
-    }
-  }
-  )
-  ctx.body = tweets
-  }catch(error){
-    if(typeof error ==='JsonWebTokenError'){
+          include: {
+          user: true
+        }
+      })
+      ctx.body = tweets
+      }catch(error){
+        if(typeof error === 'JsonWebTokenError'){
 
-      ctx.status = 401
-      return
-    }
-    else{
-      ctx.status = 500
-      return
-    }
+          ctx.status = 401
+          return
+        }
+      
+          ctx.status = 500
+          return
+    
    
   }
 })
@@ -90,7 +87,7 @@ router.post('/signup', async function(ctx)
       }
     })
 
-    const acessToken = jwt.sign({
+    const accessToken = jwt.sign({
       sub: user.id
     }, process.env.JWT_SECRET, { expiresIn: '24h'})
 
@@ -99,7 +96,7 @@ router.post('/signup', async function(ctx)
       name: user.name,
       username: user.username,
       email: user.email,
-      acessToken
+      accessToken
     }
     
   }catch(error){
@@ -136,7 +133,7 @@ try{
 
   //retorna user
   if(passwordMatch){
-    const acessToken = jwt.sign({
+    const accessToken = jwt.sign({
       sub: user.id
     }, process.env.JWT_SECRET, { expiresIn: '24h'})
   
@@ -145,7 +142,7 @@ try{
       name: user.name,
       username: user.username,
       email: user.email,
-      acessToken
+      accessToken
     }
   }
 }catch(error)

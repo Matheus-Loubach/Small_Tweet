@@ -1,17 +1,39 @@
 import { HeartIcon } from '@heroIcons/react/outline'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useFormik } from 'formik'
 
 //maximo de digitos 
 const MAX_TWEET_CHAR = 250
 
-function TweetForm({name, username, avatar, children}){
-  const [text, setText] = useState('')
+
+function TweetForm({loggedinUser, onSuccess}){
+  const formik = useFormik({
+    onSubmit: async (values, form) => {
+     await axios({
+      method: 'post',
+      url: 'http://localhost:9901/tweets',
+      headers:{
+        'authorization': `Beare ${loggedinUser.accessToken}`
+      },
+      data:{
+        text: values.text
+      },
+    })
+
+    form.setFieldValue('text', '')
+    onSuccess()
+  },
+    initialValues:{
+      text: ''
+    }
+  })
 
   function changeText(e){
     setText(e.target.value)
   }
-  //console.log(text)
+
+
   return(
 
     <div className='border-b border-silver p-4 space-y-6'>
@@ -21,22 +43,26 @@ function TweetForm({name, username, avatar, children}){
 
       </div>
 
-      <form className='pl-12 text-lg flex flex-col'>
+      <form className='pl-12 text-lg flex flex-col' onSubmit={formik.handleSubmit}>
         <textarea
         name='text'
-        value={text}
+        value={formik.values.text}
         placeholder='O que está acontecendo?'
         className='bg-transparent outline-none disabled:opacity-50'
-        onChange={changeText}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        //quando tiver enviando
+        disabled={formik.isSubmitting}
         // disabled={text.length > MAX_TWEET_CHAR}
         />        
         <div className='flex justify-end items-center space-x-3'>
         <span className='text-sm'>
-          <span>{text.length}/</span><span className='text-birdblue'>{MAX_TWEET_CHAR}</span>
+          <span>{formik.values.text.length}/</span><span className='text-birdblue'>{MAX_TWEET_CHAR}</span>
         </span>
-        <button
+        <button 
+        type='submit'
          className='bg-birdblue px-5 py-2 rounded-full disabled:opacity-50'
-         disabled={text.length > MAX_TWEET_CHAR}
+         disabled={formik.values.text.length > MAX_TWEET_CHAR || formik.isSubmitting}
          >Tweet
          </button>
         </div>
@@ -58,9 +84,7 @@ function Tweet({name, username, avatar, children}){
           {name}
         </span>{' '}
 
-        <span className="text-sm text-silver">
-          @{username}
-        </span>
+        <span className="text-sm text-silver">@{username}</span>
 
         <p>{children}</p> 
 
@@ -73,36 +97,32 @@ function Tweet({name, username, avatar, children}){
   )
 }
 
-export function Home({loggedinUser}){
+export function Home({loggedinUser}) {
   const [data, setData] = useState([])
-  //data = lista de tt
-  async function getData(){
-    const resposta = await axios.get('http://localhost:9901/tweets',{
-      headers:{
-        'authorization': `Beare ${loggedinUser.accessToken}`
+
+  async function getData() {
+    const res = await axios.get('http://localhost:9901/tweets', {
+      headers: {
+        authorization: `Bearer ${loggedinUser.accessToken}`
       }
     })
-    setData(resposta.data)
+    setData(res.data)
   }
 
-  //funcao,array
   useEffect(() => {
     getData()
-  },  [])
+  }, [])
   
-  return(/*dinamico*/
+  return(/*retorna os tt*/
   <>
-  <TweetForm />
-  
+  <TweetForm loggedinUser={loggedinUser} onSuccess={getData} />
   <div>
-
-  {/* Tweet - vem do back */}
     {data.length && data.map(tweet => (
-       <Tweet Key={tweet.id} name= {tweet.user.name} username={tweet.user.username}  avatar="/src/Mask group.png">
+       <Tweet Key={tweet.id} name={tweet.user.name} username={tweet.user.username}  avatar="/src/Mask group.png">
        {tweet.text}
        </Tweet>
     ))}
-    </div>
+  </div>
   </>
     
   )
