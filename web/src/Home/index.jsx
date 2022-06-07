@@ -20,7 +20,7 @@ function TweetForm({loggedinUser, onSuccess}){
         text: values.text
       },
     })
-
+    //limpar tt
     form.setFieldValue('text', '')
     onSuccess()
   },
@@ -51,10 +51,9 @@ function TweetForm({loggedinUser, onSuccess}){
         className='bg-transparent outline-none disabled:opacity-50'
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        //quando tiver enviando
         disabled={formik.isSubmitting}
-        // disabled={text.length > MAX_TWEET_CHAR}
         />        
+
         <div className='flex justify-end items-center space-x-3'>
         <span className='text-sm'>
           <span>{formik.values.text.length}/</span><span className='text-birdblue'>{MAX_TWEET_CHAR}</span>
