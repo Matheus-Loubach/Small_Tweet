@@ -12,7 +12,7 @@ function TweetForm({loggedinUser, onSuccess}){
     onSubmit: async (values, form) => {
      await axios({
       method: 'post',
-      url: 'http://localhost:9901/tweets',
+      url: `${import.meta.env.VITE_API_HOST}/tweets`,
       headers:{
         'authorization': `Beare ${loggedinUser.accessToken}`
       },
@@ -36,14 +36,14 @@ function TweetForm({loggedinUser, onSuccess}){
 
   return(
 
-    <div className='border-b border-silver p-4 space-y-6'>
+  <div className='border-b border-silver p-4 space-y-6'>
+
       <div className='flex space-x-5'>
         <img src= '/src/Mask group.png' className='w-7'/>
         <h1 className='font-bold text-xl'>Página inicial </h1>
-
       </div>
 
-      <form className='pl-12 text-lg flex flex-col' onSubmit={formik.handleSubmit}>
+      <form className='pl-12 text-lg flex flex-col ' onSubmit={formik.handleSubmit}>
         <textarea
         name='text'
         value={formik.values.text}
@@ -68,6 +68,8 @@ function TweetForm({loggedinUser, onSuccess}){
       </form>
 
     </div>
+
+  
   )
 }
 function Tweet({name, username, avatar, children}){
@@ -100,7 +102,7 @@ export function Home({loggedinUser}) {
   const [data, setData] = useState([])
 
   async function getData() {
-    const res = await axios.get('http://localhost:9901/tweets', {
+    const res = await axios.get(`${import.meta.env.VITE_API_HOST}/tweets`, {
       headers: {
         authorization: `Bearer ${loggedinUser.accessToken}`
       }

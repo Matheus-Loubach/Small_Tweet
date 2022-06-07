@@ -38,7 +38,6 @@ router.get('/tweets', async function(ctx){
           ctx.status = 500
           return
     
-   
   }
 })
 
@@ -155,4 +154,28 @@ try{
 }
  
    
+})
+
+// deletar o tweet
+router.delete('/tweet/:id', async ctx => {
+  const [, token] = ctx.request.headers?.authorization?.split(' ') || []
+
+  if (!token) {
+    ctx.status = 401
+    return
+  }
+
+  try {
+    jwt.verify(token, process.env.JWT_SECRET)
+    const deleted = await prisma.tweet.delete({
+      where: {
+        id: ctx.params.id
+      }
+    })
+
+    ctx.body = deleted
+  } catch (error) {
+    ctx.status = 401
+    return
+  }
 })
