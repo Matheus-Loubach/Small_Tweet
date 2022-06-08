@@ -1,6 +1,5 @@
 import Router from '@koa/router'
 import { PrismaClient } from '@prisma/client'
-import { CssSyntaxError } from 'postcss'
 import bcrypt from  'bcrypt'
 import  jwt  from 'jsonwebtoken'
   
