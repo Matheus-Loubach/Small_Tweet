@@ -1,6 +1,7 @@
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import axios from 'axios'
+import { useState } from 'react';
 
 const Input = props => (
     <input {...props} className="w-full bg-transparent p-4 border rounded-xl border-onix text-lg outline-none focus:border-platinum" />
@@ -12,25 +13,34 @@ const validationSchema = yup.object({
 })
 
 export function Login({ signInUser }) {
-
+    const [error, setError] = useState()
     const formik = useFormik({
         onSubmit: async values => {
-            const res = await axios.get(`${import.meta.env.VITE_API_HOST}/login`, {
-                auth: {
+            try {
+                const resposta = await axios.get(`${import.meta.env.VITE_API_HOST}/login`,{
+                    auth: {
                     username: values.email,
                     password: values.password
-                }
-            })
-
-            signInUser(res.data)
-        },
-        initialValues: {
-            email: '',
-            password: ''
-        },
-        validateOnMount: true,
-        validationSchema,
-    })
+                  }
+                })
+                
+                //dados login body
+                //usuario retorno da resquest
+                //tiver os dados do user/ retorna a funcao
+                setError(null)
+                signInUser(resposta.data)
+              } catch(error) {
+                setError(error.response)
+                 console.log({ type: typeof error.response, errorData: error.response })
+              }
+               },
+                initialValues: {
+                 email: '',
+                 password: ''
+                },
+                validateOnMount: true,
+                validationSchema,
+               })
 
     return (
         <div className="h-full flex justify-center">
@@ -78,6 +88,8 @@ export function Login({ signInUser }) {
                         >
                             {formik.isSubmitting ? 'Enviando...' : 'Entrar' }
                         </button>
+                    {error ? <div className='text-red-600 flex items-center justify-center bg-black rounded-full'>Email ou senha não conferem.</div> : null}
+                    
                     </form>
 
                     <span className="text-sm text-silver text-center">

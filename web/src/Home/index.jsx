@@ -35,10 +35,15 @@ function TweetForm({ loggedInUser, onSuccess }) {
   return (
     <div className="border-b border-silver p-4 space-y-6">
       <div className="flex space-x-5">
+
+       
         <img src={avatar} className="w-7" />
         <h1 className="font-bold text-xl">Página Inicial</h1>
       </div>
-
+      <div>
+        <div><h2 className="font-bold text-3xl">Bem vindo(a),  (@{loggedInUser.username})</h2></div>
+        </div>
+     
       <form className="pl-12 text-lg flex flex-col" onSubmit={formik.handleSubmit}>
         <textarea
           name="text"
@@ -68,6 +73,8 @@ function TweetForm({ loggedInUser, onSuccess }) {
 }
 
 function Tweet({ name, username, avatar, children }) {
+ 
+ 
   return (
     <div className="flex space-x-3 p-4 border-b border-silver">
         <div>
@@ -81,7 +88,7 @@ function Tweet({ name, username, avatar, children }) {
 
             <div className="flex space-x-1 text-silver text-sm items-center">
               <HeartIcon className="w-6 stroke-1"/>
-              <span>1.2k</span>
+              <span>1</span>
             </div>
         </div>
     </div>

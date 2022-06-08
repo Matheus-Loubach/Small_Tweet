@@ -2,7 +2,7 @@
 import { useFormik } from "formik"
 import * as yup from 'yup'
 import axios from "axios"
-// import { useState } from 'react';
+import { useState } from 'react';
 
 
 
@@ -18,25 +18,38 @@ const validationSchema = yup.object({
 })
 
 export function Signup({ signInUser }) {
+    const [error, setError] = useState()
   const formik = useFormik({
-      onSubmit: async values => {
-          const res = await axios.post(`${import.meta.env.VITE_API_HOST}/signup`, {
-              name: values.name,
-              email: values.email,
-              username: values.username,
-              password: values.password
-          })
+     
+    onSubmit: async values => {
+        try { 
+       const resposta = await axios.post(`${import.meta.env.VITE_API_HOST}/signup`,{
+        
+        name:     values.name,
+        email:    values.email,
+        username: values.username,
+        password: values.password
+        
+      })   
+     
 
-          signInUser(res.data)
-      },
-      initialValues: {
-          email: '',
-          password: ''
+      setError(null)
+      signInUser(resposta.data)
+    } catch (error) {
+
+      setError(error.response)
+      console.log({ type: typeof error.response, errorData: error.response })
+    }
+
+  },
+
+      initialValues:{
+       email: '',
+       password: ''
       },
       validateOnMount: true,
       validationSchema,
-  })
-
+     })
   return (
       <div className="h-full flex flex-col justify-center p-12 space-y-6">
           <h1 className="text-3xl">Crie sua conta</h1>
@@ -110,6 +123,7 @@ export function Signup({ signInUser }) {
               >
                   {formik.isSubmitting ? 'Enviando...' : 'Cadastrar' }
               </button>
+              {error ? <div className='text-red-600 flex items-center justify-center bg-black rounded-full'>Email ou Usúario já existe.</div> : null}
           </form>
 
           <span className="text-sm text-silver text-center">
