@@ -10,7 +10,7 @@ const prisma = new PrismaClient()
 
 //bd recebe os dados
 router.get('/tweets', async function(ctx){
-await prisma.tweet.deleteMany()
+
   const [, token] = ctx.request.headers?.authorization?.split(' ') || []
 
   if(!token){
