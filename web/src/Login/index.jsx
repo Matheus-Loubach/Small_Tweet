@@ -3,6 +3,9 @@ import * as yup from 'yup'
 import axios from 'axios'
 import { useState } from 'react';
 
+
+
+
 const Input = props => (
     <input {...props} className="w-full bg-transparent p-4 border rounded-xl border-onix text-lg outline-none focus:border-platinum" />
 )
@@ -44,7 +47,8 @@ export function Login({ signInUser }) {
 
     return (
         <div className="h-full flex justify-center">
-            <div className="bg-birdBlue lg:flex-1"></div>
+           <div className="bg-birdBlue lg:flex-1 items-center justify-center flex text-7xl">SmallTweet</div>
+            
             <div className="flex-1 flex justify-center items-center p-12 space-y-6">
                 <div className="max-w-md flex-1">
                     <h1 className="text-3xl">Acesse sua conta</h1>
