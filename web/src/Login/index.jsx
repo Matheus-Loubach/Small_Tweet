@@ -46,12 +46,12 @@ export function Login({ signInUser }) {
                })
 
     return (
-        <div className="h-full flex justify-center">
-           <div className="bg-birdBlue lg:flex-1 items-center justify-center flex text-7xl">SmallTweet</div>
+        <div className="h-full flex-col justify-center">
+           <div className="bg-birdBlue text-center justify-center flex mb-44 text-xl p-4 text-white">SmallTweet</div>
             
             <div className="flex-1 flex justify-center items-center p-12 space-y-6">
                 <div className="max-w-md flex-1">
-                    <h1 className="text-3xl">Acesse sua conta</h1>
+                    <h1 className="text-3xl pb-3">Acesse sua conta</h1>
 
                     <form className="space-y-6" onSubmit={formik.handleSubmit}>
 
@@ -96,7 +96,7 @@ export function Login({ signInUser }) {
                     
                     </form>
 
-                    <span className="text-sm text-silver text-center">
+                    <span className="text-sm text-white text-center">
                         Não tem conta? <a className="text-birdBlue" href="/signup">Inscreva-se</a>
                     </span>
                 </div>

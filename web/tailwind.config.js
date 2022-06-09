@@ -33,6 +33,8 @@ module.exports = {
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
+      'pc': {'max': '1023px'},
+      // => @media (max-width: 1023px) { ... }
     },
   },
   plugins: [],

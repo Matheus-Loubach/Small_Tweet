@@ -126,7 +126,7 @@ export function Signup({ signInUser }) {
               {error ? <div className='text-red-600 flex items-center justify-center bg-black rounded-full'>Email ou Usúario já existe.</div> : null}
           </form>
 
-          <span className="text-sm text-silver text-center">
+          <span className="text-sm text-white text-center">
               Já tem uma conta? <a className="text-birdBlue" href="/login">Acesse.</a>
           </span>
       </div>
