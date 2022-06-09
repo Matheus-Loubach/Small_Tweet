@@ -3,10 +3,9 @@ import { HeartIcon } from '@heroicons/react/outline'
 import { useFormik} from 'formik'
 import axios from 'axios'
 import avatar from './avatar.png'
-import { AiOutlineHome } from 'react-icons/Ai';
-import { AiFillGithub } from 'react-icons/Ai';
-import { AiOutlinePoweroff } from 'react-icons/Ai';
-
+// import { AiOutlineHome } from 'react-icons/Ai';
+// import { AiFillGithub } from 'react-icons/Ai';
+// import { AiOutlinePoweroff } from 'react-icons/Ai';
 
 const MAX_TWEET_CHAR = 140
 
@@ -46,15 +45,15 @@ function TweetForm({ loggedInUser, onSuccess})
     <>
     <div className='inline-block lg:fixed ml-10 mt-20 mr-10 uppercase text-xl'>
     <div className="flex space-x-1 text-2xl items-center">
-              <AiOutlineHome className="w-6 stroke-1"/>
+              {/* <AiOutlineHome className="w-6 stroke-1"/> */}
              <a className='cursor-pointer hover:text-birdBlue'><span>home</span></a> 
             </div>
             <div className="flex space-x-1 text-2xl items-center">
-              <AiFillGithub className="w-6 stroke-1"/>
+              {/* <AiFillGithub className="w-6 stroke-1"/> */}
               <a href='https://github.com/Matheus-Loubach' className='cursor-pointer hover:text-birdBlue'><span>perfil</span></a> 
             </div>
             <div className="flex space-x-1 text-2xl items-center">
-              <AiOutlinePoweroff className="w-6 stroke-1"/>
+              {/* <AiOutlinePoweroff className="w-6 stroke-1"/> */}
               <a href='https://small-tweet-web.vercel.app/login' className='cursor-pointer hover:text-birdBlue'><span>sair</span></a> 
             </div>
     </div>
@@ -165,13 +164,13 @@ export function Home({ loggedInUser}) {
       <div className='items-center justify-center flex p-4'>
 
       <div className="flex space-x-1 text-2xl items-center">
-             <a href=''><AiOutlineHome className="w-full h-12"/></a> 
+             {/* <a href=''><AiOutlineHome className="w-full h-12"/></a>  */}
             </div>
             <div className="flex space-x-1 text-2xl items-center">
-            <a href='https://github.com/Matheus-Loubach'> <AiFillGithub className="w-full h-12 mr-10 "/></a>
+            {/* <a href='https://github.com/Matheus-Loubach'> <AiFillGithub className="w-full h-12 mr-10 "/></a> */}
             </div>
             <div className="flex space-x-1 text-2xl items-center">
-           <a href='https://small-tweet-web.vercel.app'><AiOutlinePoweroff className="w-full h-12 "/></a>
+           {/* <a href='https://small-tweet-web.vercel.app'><AiOutlinePoweroff className="w-full h-12 "/></a> */}
             </div>
         </div>
       <footer className='items-center justify-center flex'>
