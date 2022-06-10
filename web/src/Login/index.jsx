@@ -47,7 +47,7 @@ export function Login({ signInUser }) {
 
     return (
         <div className="h-full flex-col justify-center">
-           <div className="bg-birdBlue text-center justify-center flex mb-44 text-xl p-4 text-white">SmallTweet</div>
+           <div className="bg-birdBlue text-center justify-center flex mb-44 text-xl p-4 text-white">SmallTwitter</div>
             
             <div className="flex-1 flex justify-center items-center p-12 space-y-6">
                 <div className="max-w-md flex-1">
