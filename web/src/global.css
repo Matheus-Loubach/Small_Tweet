@@ -10,3 +10,26 @@ body {
   background: theme('colors.backgroundColor');
   color: theme('colors.textColor');
 }
+
+/* Largura da barra de rolagem */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Fundo da barra de rolagem */
+::-webkit-scrollbar-track-piece {
+  background-color: rgb(0, 0, 0);
+  border-left: 1px solid rgb(0, 0, 0)
+}
+
+/* Cor do indicador de rolagem */
+::-webkit-scrollbar-thumb:vertical,
+::-webkit-scrollbar-thumb:horizontal {
+  background-color: #c4baba
+}
+
+/* Cor do indicador de rolagem - ao passar o mouse */
+::-webkit-scrollbar-thumb:vertical:hover,
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background-color: #1D9BF0
+}
